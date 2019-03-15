@@ -11,7 +11,7 @@
     "scripts": ["js/background.js"],
     "persistent": false
   },
-  "omnibox": {"keyword": "go/"},
+  "omnibox": {"keyword": "g/"},
   "icons": {
     "16": "img/icon_16.png",
     "48": "img/icon_48.png",
