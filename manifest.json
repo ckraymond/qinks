@@ -1,0 +1,29 @@
+// Go Links
+// Manifest Files
+// Author: Colin Raymond (colin.k.raymond@gmail.com)
+
+{
+  "name": "Go Links",
+  "version": "0.001",
+  "description": "A different way to get to your bookmarks.",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "omnibox": {"keyword": "go/"},
+  "icons": {
+    "16": "img/icon_16.png",
+    "48": "img/icon_48.png",
+    "128": "img/icon_128.png"
+  },
+  "page_action": {
+    "default_popup": "html/settings.html",
+    "default_icon": {
+      "16": "img/icon_16.png",
+      "48": "img/icon_48.png",
+      "128": "img/icon_128.png"
+    }
+  },
+  "permissions": ["activeTab"]
+}
