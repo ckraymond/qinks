@@ -1,6 +1,8 @@
-// Q Links
-// Background script
-// Author: Colin Raymond (colin.k.raymond@gmail.com)
+/*!
+  * Qinks
+  * Background script
+  * Author: Colin Raymond (colin.k.raymond@gmail.com)
+  */
 
 // Get the bookmark list when first initialized
 // chrome.runtime.onInstalled.addListener(extInitialize());
@@ -8,44 +10,51 @@
 // Check to see if user enters anything into the omnibox
 chrome.omnibox.onInputEntered.addListener(
   function(text) {
-    switch(text.substring(0,2)) {
+    var command = text.substring(0,2).toLowerCase();
+
+    switch(command) {
       case 's/':  // Save a new bookmark
-        addBookmark(text.substring(2));
+        var keyword = text.substring(2).toLowerCase();
+        addBookmark(keyword);
         break;
       case 'v/':  // View all saved bookmarks
         showBookmarks();
         break;
+      case 'd/':  // Delete an existing bookmark
+        var keyword = text.substring(2).toLowerCase();
+        delBookmark(keyword);
+        break;
       default:  // Otherwise try and use the link
-        navigateLink(text);
+        var keyword = text.toLowerCase();
+        navigateLink(keyword);
     }
   }
 );
+
+// Deletes an existing bookmark
+function delBookmark(keyword) {
+  chrome.storage.sync.get('bookmark_list', function(results) {
+    var bookmarkList = results['bookmark_list'];
+    if (bookmarkList[keyword] != null) {
+      var proceed =
+          confirm('Are you sure you want to delete "' + keyword + '"?');
+      if (proceed == true) {
+        delete bookmarkList[keyword];
+        chrome.storage.sync.set({'bookmark_list': bookmarkList}, function() {
+          alert('Keyword "' + keyword + '" removed!');
+        });
+      };
+    } else {
+      alert('Keyword "' + keyword + '" not found!');
+    }
+  });
+}
 
 // Show all bookmarks that are present
 function showBookmarks() {
   chrome.tabs.create({
     url: chrome.extension.getURL('html/bk_list.html'),
     active: true
-  }, function(tab) {
-    chrome.windows.create({
-      tabId: tab.id,
-      type: 'popup',
-      focused: true
-    });
-  });
-};
-
-// Gets the bookmark information
-function extInitialize() {
-  // Data structure to hold all bookmarks
-  var bookmark_list = {
-    'goog': 'https://www.google.com',
-    'news': 'https://www.cnn.com',
-    'test_three': 'test_three_url'
-  };
-
-  chrome.storage.sync.set({'bookmark_list': bookmark_list}, function() {
-    console.log('Bookmark list saved.');
   });
 };
 
@@ -67,16 +76,25 @@ function setUrl(new_url) {
 
 // Adds a new bookmark into storage
 function addBookmark(keyword) {
-  console.log(keyword);
+  if (keyword == null || keyword == '') {
+    alert('No keyword provided');
+    return;
+  };
+
   var url = null;
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs, url) {
     url = tabs[0].url;
     chrome.storage.sync.get('bookmark_list', function(results) {
-      var bookmark_list = results['bookmark_list'];
-      bookmark_list[keyword] = url;
-      chrome.storage.sync.set({'bookmark_list': bookmark_list}, function() {
+      if (results['bookmark_list'] != null) {
+        var bookmarkList = results['bookmark_list'];
+      } else {
+        var bookmarkList = {};
+      };
+      bookmarkList[keyword] = url;
+      chrome.storage.sync.set({'bookmark_list': bookmarkList}, function() {
         console.log('Saved bookmark for ' + keyword);
       });
     })
   });
+  alert('New keyword "' + keyword + '" stored.');
 }
