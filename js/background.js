@@ -3,7 +3,7 @@
 // Author: Colin Raymond (colin.k.raymond@gmail.com)
 
 // Get the bookmark list when first initialized
-chrome.runtime.onInstalled.addListener(extInitialize());
+// chrome.runtime.onInstalled.addListener(extInitialize());
 
 // Check to see if user enters anything into the omnibox
 chrome.omnibox.onInputEntered.addListener(
@@ -20,16 +20,6 @@ chrome.omnibox.onInputEntered.addListener(
     }
   }
 );
-
-// Listen for request for bookmarks
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if (reqeust.command == 'get_bookmarks') {
-      console.log('Received bookmark list request');
-      // Add sendResponse
-    }
-  }
-)
 
 // Show all bookmarks that are present
 function showBookmarks() {

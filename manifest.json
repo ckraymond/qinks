@@ -1,9 +1,9 @@
-// Q Links
+// Qinks
 // Manifest Files
 // Author: Colin Raymond (colin.k.raymond@gmail.com)
 
 {
-  "name": "Go Links",
+  "name": "Qinks",
   "version": "0.001",
   "description": "A different way to get to your bookmarks.",
   "manifest_version": 2,

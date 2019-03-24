@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Q Links - Bookmark List</title>
-    <script src="../js/bk_list.js"></script>
-    <link rel="stylesheet" href="../css/bk_list.css">
+    <title>Qinks - Bookmark List</title>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
   </head>
   <body>
-    <div id="bk_list">
-      Bookmark List
+    <div class="container">
+      <div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+          <h2 class="text-center">Qinks Bookmark List</h2>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+      <div id="bktable"></div>
     </div>
-    <div>
-      <div>Keywork</div>
-      <div>URL</div>
-    </div>
-    <div>
-      <script language="javaScript">dispBookmarks();</script>
-    </div>
+
+    <script src="../js/bk_list.js"></script>
   </body>
 </html>
