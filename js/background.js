@@ -5,7 +5,16 @@
   */
 
 // Get the bookmark list when first initialized
-// chrome.runtime.onInstalled.addListener(extInitialize());
+chrome.runtime.onMessage.addListener(
+  function(request) {
+    console.log(request);
+    if (request.command == 'delete') {
+      delBookmark(request.key);
+    } else {
+      alert('Received invalid message.');
+    }
+  }
+);
 
 // Check to see if user enters anything into the omnibox
 chrome.omnibox.onInputEntered.addListener(
