@@ -48,7 +48,6 @@ function makeTable(bookmarks) {
 
   // Add the event handlers to call the deletion of the link
   for(var key in bookmarks) {
-      console.log(key);
       if (key != null && key != '') {
         $('.' + key).click({param: key}, deleteLink);
       }
@@ -58,28 +57,7 @@ function makeTable(bookmarks) {
 // Sends message to the background to delete the link
 function deleteLink(event) {
   console.log('Deleting ' + event.data.param);
-  // delBookmark(event.data.param);
   chrome.runtime.sendMessage({command: "delete", key: event.data.param});
-  // console.log(event.data.param);
 };
-
-// Deletes an existing bookmark
-function delBookmark(keyword) {
-  chrome.storage.sync.get('bookmark_list', function(results) {
-    var bookmarkList = results['bookmark_list'];
-    if (bookmarkList[keyword] != null) {
-      var proceed =
-          confirm('Are you sure you want to delete "' + keyword + '"?');
-      if (proceed == true) {
-        delete bookmarkList[keyword];
-        chrome.storage.sync.set({'bookmark_list': bookmarkList}, function() {
-          alert('Keyword "' + keyword + '" removed!');
-        });
-      };
-    } else {
-      alert('Keyword "' + keyword + '" not found!');
-    }
-  });
-}
 
 dispBookmarks();
