@@ -21,6 +21,6 @@
       "128": "img/icon_128.png"
     }
   },
-  "permissions": ["activeTab","identity","storage","tabs",
+  "permissions": ["activeTab","storage","tabs",
                   "https://www.googleapis.com/auth/spreadsheets"]
 }
